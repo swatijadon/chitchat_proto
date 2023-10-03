@@ -1,8 +1,9 @@
 plugins {
     id 'java'
-   // id "com.google.protobuf" version "0.8.10"
+    // id "com.google.protobuf" version "0.8.10"
 }
-
+apply plugin: 'scala'
+apply plugin: "maven-publish"
 group = 'org.example'
 version = '1.0-SNAPSHOT'
 
@@ -10,16 +11,28 @@ repositories {
     mavenCentral()
 }
 
+publishing {
+    repositories {
+        maven {
+            name = "Github"
+            url = uri("https://github.com/swatijadon/chitchat_proto")
+            credentials {
+                username = '_'
+                password = findProperty("gpr.key") ?: System.getenv('GIT_TOKEN')
+            }
+        }
+    }
+    publications {
+        anydoneBaseApi(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-   // implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '2.4.1'
-    // https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java
-    //implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '3.4.0'
-    // https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java
     implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '3.8.0'
-
-
 }
 
 test {
