@@ -1,30 +1,41 @@
 plugins {
+    id 'maven-publish'
     id 'java'
-    // id "com.google.protobuf" version "0.8.10"
+    id "application"
 }
 apply plugin: 'scala'
-apply plugin: "maven-publish"
-group = 'org.example'
-version = '1.0-SNAPSHOT'
+
+group = 'com.example'
+version = '1.0.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    mavenLocal()
+//    maven {
+//        name "lightbend-maven-releases"
+//        url "https://repo.lightbend.com/lightbend/maven-release"
+//    }
+//    ivy {
+//        name "lightbend-ivy-release"
+//        url "https://repo.lightbend.com/lightbend/ivy-releases"
+//        layout "ivy"
+//    }
 }
 
 publishing {
     repositories {
         maven {
-            name = "Github"
-            url = uri("https://github.com/swatijadon/chitchat_proto")
+            name = "GitHubPackages"
+            url = 'https://maven.pkg.github.com/swatijadon/chitchat_proto'
             credentials {
                 username = '_'
-                password = findProperty("gpr.key") ?: System.getenv('GIT_TOKEN')
+                password = project.findProperty("gpr.key") ?: System.getenv('GIT_TOKEN')
             }
         }
     }
     publications {
-        anydoneBaseApi(MavenPublication) {
-            from(components.java)
+        maven(MavenPublication) {
+                from(components.java)
         }
     }
 }
@@ -38,3 +49,4 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+apply plugin: "java"
