@@ -1,0 +1,30 @@
+syntax = "proto3";
+package com.example.entities;
+
+option java_package = "com.example.rpc";
+option java_outer_classname = "LoginProto";
+option java_generate_equals_and_hash = true;
+
+message AuthBaseRequest {
+    string refId = 1;
+    string stringValue = 2;
+    repeated string stringValues = 3;
+    int32 intValue = 4;
+    int64 longValue = 5;
+    bool boolValue = 6;
+    bool doubleValue = 7;
+  }
+
+message AuthBaseResponse {
+    bool error = 1;
+    string msg = 2;
+     bool success = 3;
+    int64 timestamp = 4;
+}
+
+service AuthRpc {
+    rpc login (AuthBaseRequest) returns (AuthBaseResponse) {
+    }
+    //  protoc -I=proto --java_out=src/main/java proto/*
+
+}

@@ -1,0 +1,34 @@
+syntax = "proto3";
+package com.example.entities;
+
+option java_package = "com.example.entities";
+option java_outer_classname = "LoginProto";
+option java_generate_equals_and_hash = true;
+
+message LoginRequest {
+  string emailPhone = 1;
+  string password = 2;
+  string pushToken = 3;
+  string userId = 4; //used for login with verification code
+  string pin = 5;
+}
+
+message Authorization {
+  string token = 1;
+  string permission = 2;
+  string ip = 3;
+  string user = 4;
+  string serviceId = 5;
+}
+
+message AuthResponse {
+  bool granted = 1;
+}
+
+message LoginResponse {
+  string token = 1; //JWT token
+  string user = 2;
+  string androidVersion = 3;
+  string iosVersion = 4;
+  string sessionId = 5; //return session ID
+}
