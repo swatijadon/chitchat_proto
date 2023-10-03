@@ -1,25 +1,26 @@
 plugins {
-    id 'maven-publish'
+    //id 'maven-publish'
     id 'java'
     id "application"
 }
 apply plugin: 'scala'
+apply plugin: 'maven-publish'
 
 group = 'com.example'
-version = '1.0.0-SNAPSHOT'
+version "${version != 'unspecified' ? version : 'v1.0.0'}"
 
 repositories {
     mavenCentral()
     mavenLocal()
-//    maven {
-//        name "lightbend-maven-releases"
-//        url "https://repo.lightbend.com/lightbend/maven-release"
-//    }
-//    ivy {
-//        name "lightbend-ivy-release"
-//        url "https://repo.lightbend.com/lightbend/ivy-releases"
-//        layout "ivy"
-//    }
+    maven {
+        name "lightbend-maven-releases"
+        url "https://repo.lightbend.com/lightbend/maven-release"
+    }
+    ivy {
+        name "lightbend-ivy-release"
+        url "https://repo.lightbend.com/lightbend/ivy-releases"
+        layout "ivy"
+    }
 }
 
 publishing {
@@ -29,8 +30,10 @@ publishing {
             url = 'https://maven.pkg.github.com/swatijadon/chitchat_proto'
             credentials {
                 username = '_'
-                password = project.findProperty("gpr.key") ?: System.getenv('GIT_TOKEN')
-            }
+               // password = project.findProperty("gpr.key") ?: System.getenv('GIT_TOKEN')
+                password ='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'
+                println (password)
+                }
         }
     }
     publications {
